@@ -1,0 +1,3921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://vocalcom.com/CallFileUtilities/" xmlns:s1="http://vocalcom.com/CallFileUtilities/AbstractTypes" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://vocalcom.com/CallFileUtilities/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://vocalcom.com/CallFileUtilities/">
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sha1Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LoginResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaskProgression">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaskProgressionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTaskProgressionResult" type="tns:TaskProgression" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TaskProgression">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:TaskResult" />
+          <s:element minOccurs="1" maxOccurs="1" name="Progression" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Detail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Position" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="TaskResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Pending" />
+          <s:enumeration value="InProgress" />
+          <s:enumeration value="CompletedOK" />
+          <s:enumeration value="CompletedWithError" />
+          <s:enumeration value="ErrorCampaignNotFound" />
+          <s:enumeration value="ErrorNoCallFile" />
+          <s:enumeration value="ErrorNoClientFile" />
+          <s:enumeration value="ErrorBadQueryFormat" />
+          <s:enumeration value="ErrorTaskNotFound" />
+          <s:enumeration value="ErrorBadParameter" />
+          <s:enumeration value="ErrorTaskQueueFull" />
+          <s:enumeration value="ErrorUnauthenticated" />
+          <s:enumeration value="ErrorCustomerNotAllowed" />
+          <s:enumeration value="ErrorNoDncl" />
+          <s:enumeration value="ErrorUnknown" />
+          <s:enumeration value="ErrorNoProfiler" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetTaskModifiedIndices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaskModifiedIndicesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTaskModifiedIndicesResult" type="tns:ArrayOfLong" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLong">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="long" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetImportationErrors">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetImportationErrorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetImportationErrorsResult" type="tns:ArrayOfImportationError" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfImportationError">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ImportationError" nillable="true" type="tns:ImportationError" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ImportationError">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Destination" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfAnyType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reason" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CallFileTzInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="TzId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CallFileInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:TaskResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastError" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CallFileConnectionString" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CallFileTable" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClientFileConnectionString" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClientFileTable" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrialUrlInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:TaskResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastError" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Columns" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CallInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Indice" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Excluded" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExcludedReason" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CallBackHour" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SortOrder" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NbCalls" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NivAbs" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AgentCode" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusGroup" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusCode" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusDetail" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusLib" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusSubLib" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumbers" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExcludeCalls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="reason" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExcludeCallsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExcludeCallsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IncludeCalls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IncludeCallsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IncludeCallsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCallsOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCallsOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeCallsOrderResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCallsPriority">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="calls" type="tns:ArrayOfCallWithPriority" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCallWithPriority">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CallWithPriority" nillable="true" type="tns:CallWithPriority" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CallWithPriority">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Indice" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Priority" type="tns:Priority" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="Priority">
+        <s:restriction base="s:string">
+          <s:enumeration value="HIGH" />
+          <s:enumeration value="MEDIUM" />
+          <s:enumeration value="LOW" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeCallsPriorityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeCallsPriorityResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IncrementDecrementCallsPriority">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="value" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IncrementDecrementCallsPriorityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IncrementDecrementCallsPriorityResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCallsPriority">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="value" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCallsPriorityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetCallsPriorityResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecycleCalls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cleanHisto" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecycleCallsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RecycleCallsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallsInformations">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="phoneNumberCount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallsInformationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetCallsInformationsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallsInformationsResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCallInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CallInfo" nillable="true" type="tns:CallInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCallsInformationsResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCallsInformationsResultResult" type="tns:ArrayOfCallInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToTrialCallFileFromUrl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="destColumns" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="srcColumns" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddToTrialCallFileFromUrlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddToTrialCallFileFromUrlResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckTrialImportationUrl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckTrialImportationUrlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckTrialImportationUrlResult" type="tns:TrialUrlInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddClientsFromJson">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="jsonValues" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="addToCallFile" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="phoneFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="memoField" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="excludeCalls" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="excludeReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="callbackHour" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddClientsFromJsonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddClientsFromJsonResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddClients">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfArrayOfAnyType" />
+            <s:element minOccurs="1" maxOccurs="1" name="addToCallFile" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="phoneFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="memoField" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="excludeCalls" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="excludeReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="callbackHour" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfAnyType" nillable="true" type="tns:ArrayOfAnyType" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddClientsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddClientsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateClientFromJson">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="indice" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="jsonClientValues" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateClientFromJsonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateClientFromJsonResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="indice" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientValues" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateClientResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteClients">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteClientsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteClientsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCalls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="phoneFields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="memoField" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="excludeCalls" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="excludeReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="callbackHour" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCallsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddCallsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCalls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCallsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteCallsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCallbacks">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="callbackHour" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="phoneField" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCallbacksResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateCallbacksResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCallbacksForCallFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="callbackHour" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="phoneField" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCallbacksForCallFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateCallbacksForCallFileResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCallsAffectation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="destCampaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentCode" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCallsAffectationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeCallsAffectationResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteProfiler">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteProfilerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExecuteProfilerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallFileInfos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallFileInfosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCallFileInfosResult" type="tns:CallFileInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyDnclToCallFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="startIndice" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyDnclToCallFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ApplyDnclToCallFileResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyDnclToCallFileForIndices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="indices" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyDnclToCallFileForIndicesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ApplyDnclToCallFileForIndicesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListExistingIndices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="indices" type="tns:ArrayOfLong" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListExistingIndicesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ListExistingIndicesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDNCLInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDNCLInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDNCLInfoResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDNCLInfoResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CountResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="nbItems" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DnclInfoResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CountResult">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="lastUpdate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetDNCLInfoResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDNCLInfoResultResult" type="tns:DnclInfoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CountBlacklisted">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CountBlacklistedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CountBlacklistedResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCountBlacklistedResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCountBlacklistedResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCountBlacklistedResultResult" type="tns:CountResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CountCallRecords">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupByCondition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="whereCondition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CountCallRecordsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CountCallRecordsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCountCallRecordsResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CallRecords">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Record" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCallRecords">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CallRecords" nillable="true" type="tns:CallRecords" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCountCallRecordsResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCountCallRecordsResultResult" type="tns:ArrayOfCallRecords" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetApplyDnclResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ApplyDnclResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BlackListedIndices" type="tns:ArrayOfLong" />
+          <s:element minOccurs="0" maxOccurs="1" name="IncludedIndices" type="tns:ArrayOfLong" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExcludedIndices" type="tns:ArrayOfLong" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetApplyDnclResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetApplyDnclResultResult" type="tns:ApplyDnclResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetDncl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetDnclResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ResetDnclResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToDnclFromCsv">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToDnclFromCsvResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddToDnclFromCsvResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToDncl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToDnclResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddToDnclResult" type="tns:TaskResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCallFileTZ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="callFileId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="condition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCallFileTZResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetCallFileTZResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallFileTZ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="taskNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCallFileTzInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CallFileTzInfo" nillable="true" type="tns:CallFileTzInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCallFileTZResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCallFileTZResult" type="tns:ArrayOfCallFileTzInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ShuffleCallFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ShuffleCallFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ShuffleCallFileResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateTelDisplayColumn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="campaignId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateTelDisplayColumnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateTelDisplayColumnResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="TaskProgression" nillable="true" type="tns:TaskProgression" />
+      <s:element name="ArrayOfLong" nillable="true" type="tns:ArrayOfLong" />
+      <s:element name="ArrayOfImportationError" nillable="true" type="tns:ArrayOfImportationError" />
+      <s:element name="int" type="s:int" />
+      <s:element name="ArrayOfCallInfo" nillable="true" type="tns:ArrayOfCallInfo" />
+      <s:element name="TrialUrlInfo" nillable="true" type="tns:TrialUrlInfo" />
+      <s:element name="CallFileInfo" nillable="true" type="tns:CallFileInfo" />
+      <s:element name="DnclInfoResult" nillable="true" type="tns:DnclInfoResult" />
+      <s:element name="CountResult" nillable="true" type="tns:CountResult" />
+      <s:element name="ArrayOfCallRecords" nillable="true" type="tns:ArrayOfCallRecords" />
+      <s:element name="ApplyDnclResult" nillable="true" type="tns:ApplyDnclResult" />
+      <s:element name="TaskResult" type="tns:TaskResult" />
+      <s:element name="ArrayOfCallFileTzInfo" nillable="true" type="tns:ArrayOfCallFileTzInfo" />
+    </s:schema>
+    <s:schema targetNamespace="http://vocalcom.com/CallFileUtilities/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTaskProgression" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTaskProgressionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTaskModifiedIndices" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTaskModifiedIndicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetImportationErrors" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetImportationErrorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsSoapIn">
+    <wsdl:part name="parameters" element="tns:ExcludeCalls" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsSoapOut">
+    <wsdl:part name="parameters" element="tns:ExcludeCallsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsSoapIn">
+    <wsdl:part name="parameters" element="tns:IncludeCalls" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsSoapOut">
+    <wsdl:part name="parameters" element="tns:IncludeCallsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCallsOrder" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCallsOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsPrioritySoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCallsPriority" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsPrioritySoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCallsPriorityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPrioritySoapIn">
+    <wsdl:part name="parameters" element="tns:IncrementDecrementCallsPriority" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPrioritySoapOut">
+    <wsdl:part name="parameters" element="tns:IncrementDecrementCallsPriorityResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPrioritySoapIn">
+    <wsdl:part name="parameters" element="tns:SetCallsPriority" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPrioritySoapOut">
+    <wsdl:part name="parameters" element="tns:SetCallsPriorityResponse" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsSoapIn">
+    <wsdl:part name="parameters" element="tns:RecycleCalls" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsSoapOut">
+    <wsdl:part name="parameters" element="tns:RecycleCallsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCallsInformations" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCallsInformationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCallsInformationsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCallsInformationsResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToTrialCallFileFromUrl" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToTrialCallFileFromUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckTrialImportationUrl" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckTrialImportationUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonSoapIn">
+    <wsdl:part name="parameters" element="tns:AddClientsFromJson" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonSoapOut">
+    <wsdl:part name="parameters" element="tns:AddClientsFromJsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsSoapIn">
+    <wsdl:part name="parameters" element="tns:AddClients" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsSoapOut">
+    <wsdl:part name="parameters" element="tns:AddClientsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateClientFromJson" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateClientFromJsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateClient" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteClients" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteClientsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsSoapIn">
+    <wsdl:part name="parameters" element="tns:AddCalls" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsSoapOut">
+    <wsdl:part name="parameters" element="tns:AddCallsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCalls" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCallsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCallbacks" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCallbacksResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCallbacksForCallFile" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCallbacksForCallFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCallsAffectation" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCallsAffectationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteProfiler" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteProfilerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCallFileInfos" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCallFileInfosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyDnclToCallFile" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyDnclToCallFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyDnclToCallFileForIndices" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyDnclToCallFileForIndicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesSoapIn">
+    <wsdl:part name="parameters" element="tns:ListExistingIndices" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesSoapOut">
+    <wsdl:part name="parameters" element="tns:ListExistingIndicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDNCLInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDNCLInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDNCLInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDNCLInfoResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedSoapIn">
+    <wsdl:part name="parameters" element="tns:CountBlacklisted" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedSoapOut">
+    <wsdl:part name="parameters" element="tns:CountBlacklistedResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCountBlacklistedResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCountBlacklistedResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsSoapIn">
+    <wsdl:part name="parameters" element="tns:CountCallRecords" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsSoapOut">
+    <wsdl:part name="parameters" element="tns:CountCallRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCountCallRecordsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCountCallRecordsResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetApplyDnclResult" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetApplyDnclResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclSoapIn">
+    <wsdl:part name="parameters" element="tns:ResetDncl" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclSoapOut">
+    <wsdl:part name="parameters" element="tns:ResetDnclResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToDnclFromCsv" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToDnclFromCsvResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToDncl" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToDnclResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCallFileTZ" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCallFileTZResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCallFileTZ" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCallFileTZResponse" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileSoapIn">
+    <wsdl:part name="parameters" element="tns:ShuffleCallFile" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileSoapOut">
+    <wsdl:part name="parameters" element="tns:ShuffleCallFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateTelDisplayColumn" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateTelDisplayColumnResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="sha1Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionHttpGetOut">
+    <wsdl:part name="Body" element="tns:TaskProgression" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfImportationError" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="reason" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPriorityHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPriorityHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPriorityHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPriorityHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="cleanHisto" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="phoneNumberCount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallInfo" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="url" type="s:string" />
+    <wsdl:part name="destColumns" type="s1:StringArray" />
+    <wsdl:part name="srcColumns" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlHttpGetIn">
+    <wsdl:part name="url" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlHttpGetOut">
+    <wsdl:part name="Body" element="tns:TrialUrlInfo" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="fields" type="s1:StringArray" />
+    <wsdl:part name="jsonValues" type="s:string" />
+    <wsdl:part name="addToCallFile" type="s:string" />
+    <wsdl:part name="phoneFields" type="s1:StringArray" />
+    <wsdl:part name="memoField" type="s:string" />
+    <wsdl:part name="excludeCalls" type="s:string" />
+    <wsdl:part name="excludeReason" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="indice" type="s:string" />
+    <wsdl:part name="callFileFields" type="s1:StringArray" />
+    <wsdl:part name="callFileValues" type="s1:StringArray" />
+    <wsdl:part name="clientFields" type="s1:StringArray" />
+    <wsdl:part name="jsonClientValues" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="phoneFields" type="s1:StringArray" />
+    <wsdl:part name="memoField" type="s:string" />
+    <wsdl:part name="excludeCalls" type="s:string" />
+    <wsdl:part name="excludeReason" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+    <wsdl:part name="phoneField" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+    <wsdl:part name="phoneField" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="destCampaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosHttpGetOut">
+    <wsdl:part name="Body" element="tns:CallFileInfo" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="startIndice" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="indices" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="indices" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:DnclInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:CountResult" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="groupByCondition" type="s:string" />
+    <wsdl:part name="whereCondition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallRecords" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:ApplyDnclResult" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclHttpGetIn">
+    <wsdl:part name="phoneNumber" type="s:string" />
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclHttpGetOut">
+    <wsdl:part name="Body" element="tns:TaskResult" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZHttpGetIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallFileTzInfo" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnHttpGetIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="sha1Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskProgressionHttpPostOut">
+    <wsdl:part name="Body" element="tns:TaskProgression" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskModifiedIndicesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLong" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetImportationErrorsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfImportationError" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="reason" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExcludeCallsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IncludeCallsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsOrderHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPriorityHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IncrementDecrementCallsPriorityHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPriorityHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCallsPriorityHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="cleanHisto" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RecycleCallsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="phoneNumberCount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallsInformationsResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallInfo" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="url" type="s:string" />
+    <wsdl:part name="destColumns" type="s1:StringArray" />
+    <wsdl:part name="srcColumns" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="AddToTrialCallFileFromUrlHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlHttpPostIn">
+    <wsdl:part name="url" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckTrialImportationUrlHttpPostOut">
+    <wsdl:part name="Body" element="tns:TrialUrlInfo" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="fields" type="s1:StringArray" />
+    <wsdl:part name="jsonValues" type="s:string" />
+    <wsdl:part name="addToCallFile" type="s:string" />
+    <wsdl:part name="phoneFields" type="s1:StringArray" />
+    <wsdl:part name="memoField" type="s:string" />
+    <wsdl:part name="excludeCalls" type="s:string" />
+    <wsdl:part name="excludeReason" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddClientsFromJsonHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="indice" type="s:string" />
+    <wsdl:part name="callFileFields" type="s1:StringArray" />
+    <wsdl:part name="callFileValues" type="s1:StringArray" />
+    <wsdl:part name="clientFields" type="s1:StringArray" />
+    <wsdl:part name="jsonClientValues" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateClientFromJsonHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteClientsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="phoneFields" type="s1:StringArray" />
+    <wsdl:part name="memoField" type="s:string" />
+    <wsdl:part name="excludeCalls" type="s:string" />
+    <wsdl:part name="excludeReason" type="s:string" />
+    <wsdl:part name="order" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddCallsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCallsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+    <wsdl:part name="phoneField" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="callbackHour" type="s:string" />
+    <wsdl:part name="phoneField" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCallbacksForCallFileHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="destCampaignId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCallsAffectationHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteProfilerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileInfosHttpPostOut">
+    <wsdl:part name="Body" element="tns:CallFileInfo" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="startIndice" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="indices" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ApplyDnclToCallFileForIndicesHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="indices" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ListExistingIndicesHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDNCLInfoResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:DnclInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CountBlacklistedHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCountBlacklistedResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:CountResult" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+    <wsdl:part name="groupByCondition" type="s:string" />
+    <wsdl:part name="whereCondition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CountCallRecordsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCountCallRecordsResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallRecords" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetApplyDnclResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:ApplyDnclResult" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ResetDnclHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclFromCsvHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclHttpPostIn">
+    <wsdl:part name="phoneNumber" type="s:string" />
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToDnclHttpPostOut">
+    <wsdl:part name="Body" element="tns:TaskResult" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="callFileId" type="s:string" />
+    <wsdl:part name="condition" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCallFileTZHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZHttpPostIn">
+    <wsdl:part name="taskNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCallFileTZHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCallFileTzInfo" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ShuffleCallFileHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnHttpPostIn">
+    <wsdl:part name="customerId" type="s:string" />
+    <wsdl:part name="campaignId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTelDisplayColumnHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:portType name="CallFileUtilitiesSoap">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <wsdl:input message="tns:GetTaskProgressionSoapIn" />
+      <wsdl:output message="tns:GetTaskProgressionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <wsdl:input message="tns:GetTaskModifiedIndicesSoapIn" />
+      <wsdl:output message="tns:GetTaskModifiedIndicesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <wsdl:input message="tns:GetImportationErrorsSoapIn" />
+      <wsdl:output message="tns:GetImportationErrorsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <wsdl:input message="tns:ExcludeCallsSoapIn" />
+      <wsdl:output message="tns:ExcludeCallsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <wsdl:input message="tns:IncludeCallsSoapIn" />
+      <wsdl:output message="tns:IncludeCallsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <wsdl:input message="tns:ChangeCallsOrderSoapIn" />
+      <wsdl:output message="tns:ChangeCallsOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsPriority">
+      <wsdl:input message="tns:ChangeCallsPrioritySoapIn" />
+      <wsdl:output message="tns:ChangeCallsPrioritySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <wsdl:input message="tns:IncrementDecrementCallsPrioritySoapIn" />
+      <wsdl:output message="tns:IncrementDecrementCallsPrioritySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <wsdl:input message="tns:SetCallsPrioritySoapIn" />
+      <wsdl:output message="tns:SetCallsPrioritySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <wsdl:input message="tns:RecycleCallsSoapIn" />
+      <wsdl:output message="tns:RecycleCallsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <wsdl:input message="tns:GetCallsInformationsSoapIn" />
+      <wsdl:output message="tns:GetCallsInformationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <wsdl:input message="tns:GetCallsInformationsResultSoapIn" />
+      <wsdl:output message="tns:GetCallsInformationsResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <wsdl:input message="tns:AddToTrialCallFileFromUrlSoapIn" />
+      <wsdl:output message="tns:AddToTrialCallFileFromUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <wsdl:input message="tns:CheckTrialImportationUrlSoapIn" />
+      <wsdl:output message="tns:CheckTrialImportationUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <wsdl:input message="tns:AddClientsFromJsonSoapIn" />
+      <wsdl:output message="tns:AddClientsFromJsonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddClients">
+      <wsdl:input message="tns:AddClientsSoapIn" />
+      <wsdl:output message="tns:AddClientsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <wsdl:input message="tns:UpdateClientFromJsonSoapIn" />
+      <wsdl:output message="tns:UpdateClientFromJsonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <wsdl:input message="tns:UpdateClientSoapIn" />
+      <wsdl:output message="tns:UpdateClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <wsdl:input message="tns:DeleteClientsSoapIn" />
+      <wsdl:output message="tns:DeleteClientsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <wsdl:input message="tns:AddCallsSoapIn" />
+      <wsdl:output message="tns:AddCallsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <wsdl:input message="tns:DeleteCallsSoapIn" />
+      <wsdl:output message="tns:DeleteCallsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <wsdl:input message="tns:UpdateCallbacksSoapIn" />
+      <wsdl:output message="tns:UpdateCallbacksSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <wsdl:input message="tns:UpdateCallbacksForCallFileSoapIn" />
+      <wsdl:output message="tns:UpdateCallbacksForCallFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <wsdl:input message="tns:ChangeCallsAffectationSoapIn" />
+      <wsdl:output message="tns:ChangeCallsAffectationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <wsdl:input message="tns:ExecuteProfilerSoapIn" />
+      <wsdl:output message="tns:ExecuteProfilerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <wsdl:input message="tns:GetCallFileInfosSoapIn" />
+      <wsdl:output message="tns:GetCallFileInfosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <wsdl:input message="tns:ApplyDnclToCallFileSoapIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <wsdl:input message="tns:ApplyDnclToCallFileForIndicesSoapIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileForIndicesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <wsdl:input message="tns:ListExistingIndicesSoapIn" />
+      <wsdl:output message="tns:ListExistingIndicesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <wsdl:input message="tns:GetDNCLInfoSoapIn" />
+      <wsdl:output message="tns:GetDNCLInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <wsdl:input message="tns:GetDNCLInfoResultSoapIn" />
+      <wsdl:output message="tns:GetDNCLInfoResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <wsdl:input message="tns:CountBlacklistedSoapIn" />
+      <wsdl:output message="tns:CountBlacklistedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <wsdl:input message="tns:GetCountBlacklistedResultSoapIn" />
+      <wsdl:output message="tns:GetCountBlacklistedResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <wsdl:input message="tns:CountCallRecordsSoapIn" />
+      <wsdl:output message="tns:CountCallRecordsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <wsdl:input message="tns:GetCountCallRecordsResultSoapIn" />
+      <wsdl:output message="tns:GetCountCallRecordsResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <wsdl:input message="tns:GetApplyDnclResultSoapIn" />
+      <wsdl:output message="tns:GetApplyDnclResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <wsdl:input message="tns:ResetDnclSoapIn" />
+      <wsdl:output message="tns:ResetDnclSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <wsdl:input message="tns:AddToDnclFromCsvSoapIn" />
+      <wsdl:output message="tns:AddToDnclFromCsvSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <wsdl:input message="tns:AddToDnclSoapIn" />
+      <wsdl:output message="tns:AddToDnclSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <wsdl:input message="tns:SetCallFileTZSoapIn" />
+      <wsdl:output message="tns:SetCallFileTZSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <wsdl:input message="tns:GetCallFileTZSoapIn" />
+      <wsdl:output message="tns:GetCallFileTZSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <wsdl:input message="tns:ShuffleCallFileSoapIn" />
+      <wsdl:output message="tns:ShuffleCallFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <wsdl:input message="tns:UpdateTelDisplayColumnSoapIn" />
+      <wsdl:output message="tns:UpdateTelDisplayColumnSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CallFileUtilitiesHttpGet">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginHttpGetIn" />
+      <wsdl:output message="tns:LoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <wsdl:input message="tns:GetTaskProgressionHttpGetIn" />
+      <wsdl:output message="tns:GetTaskProgressionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <wsdl:input message="tns:GetTaskModifiedIndicesHttpGetIn" />
+      <wsdl:output message="tns:GetTaskModifiedIndicesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <wsdl:input message="tns:GetImportationErrorsHttpGetIn" />
+      <wsdl:output message="tns:GetImportationErrorsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <wsdl:input message="tns:ExcludeCallsHttpGetIn" />
+      <wsdl:output message="tns:ExcludeCallsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <wsdl:input message="tns:IncludeCallsHttpGetIn" />
+      <wsdl:output message="tns:IncludeCallsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <wsdl:input message="tns:ChangeCallsOrderHttpGetIn" />
+      <wsdl:output message="tns:ChangeCallsOrderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <wsdl:input message="tns:IncrementDecrementCallsPriorityHttpGetIn" />
+      <wsdl:output message="tns:IncrementDecrementCallsPriorityHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <wsdl:input message="tns:SetCallsPriorityHttpGetIn" />
+      <wsdl:output message="tns:SetCallsPriorityHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <wsdl:input message="tns:RecycleCallsHttpGetIn" />
+      <wsdl:output message="tns:RecycleCallsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <wsdl:input message="tns:GetCallsInformationsHttpGetIn" />
+      <wsdl:output message="tns:GetCallsInformationsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <wsdl:input message="tns:GetCallsInformationsResultHttpGetIn" />
+      <wsdl:output message="tns:GetCallsInformationsResultHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <wsdl:input message="tns:AddToTrialCallFileFromUrlHttpGetIn" />
+      <wsdl:output message="tns:AddToTrialCallFileFromUrlHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <wsdl:input message="tns:CheckTrialImportationUrlHttpGetIn" />
+      <wsdl:output message="tns:CheckTrialImportationUrlHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <wsdl:input message="tns:AddClientsFromJsonHttpGetIn" />
+      <wsdl:output message="tns:AddClientsFromJsonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <wsdl:input message="tns:UpdateClientFromJsonHttpGetIn" />
+      <wsdl:output message="tns:UpdateClientFromJsonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <wsdl:input message="tns:DeleteClientsHttpGetIn" />
+      <wsdl:output message="tns:DeleteClientsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <wsdl:input message="tns:AddCallsHttpGetIn" />
+      <wsdl:output message="tns:AddCallsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <wsdl:input message="tns:DeleteCallsHttpGetIn" />
+      <wsdl:output message="tns:DeleteCallsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <wsdl:input message="tns:UpdateCallbacksHttpGetIn" />
+      <wsdl:output message="tns:UpdateCallbacksHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <wsdl:input message="tns:UpdateCallbacksForCallFileHttpGetIn" />
+      <wsdl:output message="tns:UpdateCallbacksForCallFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <wsdl:input message="tns:ChangeCallsAffectationHttpGetIn" />
+      <wsdl:output message="tns:ChangeCallsAffectationHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <wsdl:input message="tns:ExecuteProfilerHttpGetIn" />
+      <wsdl:output message="tns:ExecuteProfilerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <wsdl:input message="tns:GetCallFileInfosHttpGetIn" />
+      <wsdl:output message="tns:GetCallFileInfosHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <wsdl:input message="tns:ApplyDnclToCallFileHttpGetIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <wsdl:input message="tns:ApplyDnclToCallFileForIndicesHttpGetIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileForIndicesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <wsdl:input message="tns:ListExistingIndicesHttpGetIn" />
+      <wsdl:output message="tns:ListExistingIndicesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <wsdl:input message="tns:GetDNCLInfoHttpGetIn" />
+      <wsdl:output message="tns:GetDNCLInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <wsdl:input message="tns:GetDNCLInfoResultHttpGetIn" />
+      <wsdl:output message="tns:GetDNCLInfoResultHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <wsdl:input message="tns:CountBlacklistedHttpGetIn" />
+      <wsdl:output message="tns:CountBlacklistedHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <wsdl:input message="tns:GetCountBlacklistedResultHttpGetIn" />
+      <wsdl:output message="tns:GetCountBlacklistedResultHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <wsdl:input message="tns:CountCallRecordsHttpGetIn" />
+      <wsdl:output message="tns:CountCallRecordsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <wsdl:input message="tns:GetCountCallRecordsResultHttpGetIn" />
+      <wsdl:output message="tns:GetCountCallRecordsResultHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <wsdl:input message="tns:GetApplyDnclResultHttpGetIn" />
+      <wsdl:output message="tns:GetApplyDnclResultHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <wsdl:input message="tns:ResetDnclHttpGetIn" />
+      <wsdl:output message="tns:ResetDnclHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <wsdl:input message="tns:AddToDnclFromCsvHttpGetIn" />
+      <wsdl:output message="tns:AddToDnclFromCsvHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <wsdl:input message="tns:AddToDnclHttpGetIn" />
+      <wsdl:output message="tns:AddToDnclHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <wsdl:input message="tns:SetCallFileTZHttpGetIn" />
+      <wsdl:output message="tns:SetCallFileTZHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <wsdl:input message="tns:GetCallFileTZHttpGetIn" />
+      <wsdl:output message="tns:GetCallFileTZHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <wsdl:input message="tns:ShuffleCallFileHttpGetIn" />
+      <wsdl:output message="tns:ShuffleCallFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <wsdl:input message="tns:UpdateTelDisplayColumnHttpGetIn" />
+      <wsdl:output message="tns:UpdateTelDisplayColumnHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CallFileUtilitiesHttpPost">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginHttpPostIn" />
+      <wsdl:output message="tns:LoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <wsdl:input message="tns:GetTaskProgressionHttpPostIn" />
+      <wsdl:output message="tns:GetTaskProgressionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <wsdl:input message="tns:GetTaskModifiedIndicesHttpPostIn" />
+      <wsdl:output message="tns:GetTaskModifiedIndicesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <wsdl:input message="tns:GetImportationErrorsHttpPostIn" />
+      <wsdl:output message="tns:GetImportationErrorsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <wsdl:input message="tns:ExcludeCallsHttpPostIn" />
+      <wsdl:output message="tns:ExcludeCallsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <wsdl:input message="tns:IncludeCallsHttpPostIn" />
+      <wsdl:output message="tns:IncludeCallsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <wsdl:input message="tns:ChangeCallsOrderHttpPostIn" />
+      <wsdl:output message="tns:ChangeCallsOrderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <wsdl:input message="tns:IncrementDecrementCallsPriorityHttpPostIn" />
+      <wsdl:output message="tns:IncrementDecrementCallsPriorityHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <wsdl:input message="tns:SetCallsPriorityHttpPostIn" />
+      <wsdl:output message="tns:SetCallsPriorityHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <wsdl:input message="tns:RecycleCallsHttpPostIn" />
+      <wsdl:output message="tns:RecycleCallsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <wsdl:input message="tns:GetCallsInformationsHttpPostIn" />
+      <wsdl:output message="tns:GetCallsInformationsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <wsdl:input message="tns:GetCallsInformationsResultHttpPostIn" />
+      <wsdl:output message="tns:GetCallsInformationsResultHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <wsdl:input message="tns:AddToTrialCallFileFromUrlHttpPostIn" />
+      <wsdl:output message="tns:AddToTrialCallFileFromUrlHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <wsdl:input message="tns:CheckTrialImportationUrlHttpPostIn" />
+      <wsdl:output message="tns:CheckTrialImportationUrlHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <wsdl:input message="tns:AddClientsFromJsonHttpPostIn" />
+      <wsdl:output message="tns:AddClientsFromJsonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <wsdl:input message="tns:UpdateClientFromJsonHttpPostIn" />
+      <wsdl:output message="tns:UpdateClientFromJsonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <wsdl:input message="tns:DeleteClientsHttpPostIn" />
+      <wsdl:output message="tns:DeleteClientsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <wsdl:input message="tns:AddCallsHttpPostIn" />
+      <wsdl:output message="tns:AddCallsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <wsdl:input message="tns:DeleteCallsHttpPostIn" />
+      <wsdl:output message="tns:DeleteCallsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <wsdl:input message="tns:UpdateCallbacksHttpPostIn" />
+      <wsdl:output message="tns:UpdateCallbacksHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <wsdl:input message="tns:UpdateCallbacksForCallFileHttpPostIn" />
+      <wsdl:output message="tns:UpdateCallbacksForCallFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <wsdl:input message="tns:ChangeCallsAffectationHttpPostIn" />
+      <wsdl:output message="tns:ChangeCallsAffectationHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <wsdl:input message="tns:ExecuteProfilerHttpPostIn" />
+      <wsdl:output message="tns:ExecuteProfilerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <wsdl:input message="tns:GetCallFileInfosHttpPostIn" />
+      <wsdl:output message="tns:GetCallFileInfosHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <wsdl:input message="tns:ApplyDnclToCallFileHttpPostIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <wsdl:input message="tns:ApplyDnclToCallFileForIndicesHttpPostIn" />
+      <wsdl:output message="tns:ApplyDnclToCallFileForIndicesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <wsdl:input message="tns:ListExistingIndicesHttpPostIn" />
+      <wsdl:output message="tns:ListExistingIndicesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <wsdl:input message="tns:GetDNCLInfoHttpPostIn" />
+      <wsdl:output message="tns:GetDNCLInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <wsdl:input message="tns:GetDNCLInfoResultHttpPostIn" />
+      <wsdl:output message="tns:GetDNCLInfoResultHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <wsdl:input message="tns:CountBlacklistedHttpPostIn" />
+      <wsdl:output message="tns:CountBlacklistedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <wsdl:input message="tns:GetCountBlacklistedResultHttpPostIn" />
+      <wsdl:output message="tns:GetCountBlacklistedResultHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <wsdl:input message="tns:CountCallRecordsHttpPostIn" />
+      <wsdl:output message="tns:CountCallRecordsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <wsdl:input message="tns:GetCountCallRecordsResultHttpPostIn" />
+      <wsdl:output message="tns:GetCountCallRecordsResultHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <wsdl:input message="tns:GetApplyDnclResultHttpPostIn" />
+      <wsdl:output message="tns:GetApplyDnclResultHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <wsdl:input message="tns:ResetDnclHttpPostIn" />
+      <wsdl:output message="tns:ResetDnclHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <wsdl:input message="tns:AddToDnclFromCsvHttpPostIn" />
+      <wsdl:output message="tns:AddToDnclFromCsvHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <wsdl:input message="tns:AddToDnclHttpPostIn" />
+      <wsdl:output message="tns:AddToDnclHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <wsdl:input message="tns:SetCallFileTZHttpPostIn" />
+      <wsdl:output message="tns:SetCallFileTZHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <wsdl:input message="tns:GetCallFileTZHttpPostIn" />
+      <wsdl:output message="tns:GetCallFileTZHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <wsdl:input message="tns:ShuffleCallFileHttpPostIn" />
+      <wsdl:output message="tns:ShuffleCallFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <wsdl:input message="tns:UpdateTelDisplayColumnHttpPostIn" />
+      <wsdl:output message="tns:UpdateTelDisplayColumnHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CallFileUtilitiesSoap" type="tns:CallFileUtilitiesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetTaskProgression" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetTaskModifiedIndices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetImportationErrors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ExcludeCalls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/IncludeCalls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsPriority">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsPriority" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/IncrementDecrementCallsPriority" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/SetCallsPriority" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/RecycleCalls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallsInformations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallsInformationsResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToTrialCallFileFromUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/CheckTrialImportationUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddClientsFromJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClients">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddClients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateClientFromJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/DeleteClients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddCalls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/DeleteCalls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateCallbacks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateCallbacksForCallFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsAffectation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ExecuteProfiler" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallFileInfos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ApplyDnclToCallFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ApplyDnclToCallFileForIndices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ListExistingIndices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetDNCLInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetDNCLInfoResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/CountBlacklisted" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCountBlacklistedResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/CountCallRecords" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCountCallRecordsResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetApplyDnclResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ResetDncl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToDnclFromCsv" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToDncl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/SetCallFileTZ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallFileTZ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/ShuffleCallFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <soap:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateTelDisplayColumn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CallFileUtilitiesSoap12" type="tns:CallFileUtilitiesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetTaskProgression" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetTaskModifiedIndices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetImportationErrors" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ExcludeCalls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/IncludeCalls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsPriority">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsPriority" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/IncrementDecrementCallsPriority" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/SetCallsPriority" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/RecycleCalls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallsInformations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallsInformationsResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToTrialCallFileFromUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/CheckTrialImportationUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddClientsFromJson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClients">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddClients" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateClientFromJson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/DeleteClients" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddCalls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/DeleteCalls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateCallbacks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateCallbacksForCallFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ChangeCallsAffectation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ExecuteProfiler" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallFileInfos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ApplyDnclToCallFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ApplyDnclToCallFileForIndices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ListExistingIndices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetDNCLInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetDNCLInfoResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/CountBlacklisted" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCountBlacklistedResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/CountCallRecords" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCountCallRecordsResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetApplyDnclResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ResetDncl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToDnclFromCsv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/AddToDncl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/SetCallFileTZ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/GetCallFileTZ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/ShuffleCallFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <soap12:operation soapAction="http://vocalcom.com/CallFileUtilities/UpdateTelDisplayColumn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CallFileUtilitiesHttpGet" type="tns:CallFileUtilitiesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Login">
+      <http:operation location="/Login" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <http:operation location="/GetTaskProgression" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <http:operation location="/GetTaskModifiedIndices" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <http:operation location="/GetImportationErrors" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <http:operation location="/ExcludeCalls" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <http:operation location="/IncludeCalls" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <http:operation location="/ChangeCallsOrder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <http:operation location="/IncrementDecrementCallsPriority" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <http:operation location="/SetCallsPriority" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <http:operation location="/RecycleCalls" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <http:operation location="/GetCallsInformations" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <http:operation location="/GetCallsInformationsResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <http:operation location="/AddToTrialCallFileFromUrl" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <http:operation location="/CheckTrialImportationUrl" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <http:operation location="/AddClientsFromJson" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <http:operation location="/UpdateClientFromJson" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <http:operation location="/DeleteClients" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <http:operation location="/AddCalls" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <http:operation location="/DeleteCalls" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <http:operation location="/UpdateCallbacks" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <http:operation location="/UpdateCallbacksForCallFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <http:operation location="/ChangeCallsAffectation" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <http:operation location="/ExecuteProfiler" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <http:operation location="/GetCallFileInfos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <http:operation location="/ApplyDnclToCallFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <http:operation location="/ApplyDnclToCallFileForIndices" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <http:operation location="/ListExistingIndices" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <http:operation location="/GetDNCLInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <http:operation location="/GetDNCLInfoResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <http:operation location="/CountBlacklisted" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <http:operation location="/GetCountBlacklistedResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <http:operation location="/CountCallRecords" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <http:operation location="/GetCountCallRecordsResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <http:operation location="/GetApplyDnclResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <http:operation location="/ResetDncl" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <http:operation location="/AddToDnclFromCsv" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <http:operation location="/AddToDncl" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <http:operation location="/SetCallFileTZ" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <http:operation location="/GetCallFileTZ" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <http:operation location="/ShuffleCallFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <http:operation location="/UpdateTelDisplayColumn" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CallFileUtilitiesHttpPost" type="tns:CallFileUtilitiesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Login">
+      <http:operation location="/Login" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskProgression">
+      <http:operation location="/GetTaskProgression" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskModifiedIndices">
+      <http:operation location="/GetTaskModifiedIndices" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImportationErrors">
+      <http:operation location="/GetImportationErrors" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcludeCalls">
+      <http:operation location="/ExcludeCalls" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncludeCalls">
+      <http:operation location="/IncludeCalls" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsOrder">
+      <http:operation location="/ChangeCallsOrder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementDecrementCallsPriority">
+      <http:operation location="/IncrementDecrementCallsPriority" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallsPriority">
+      <http:operation location="/SetCallsPriority" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecycleCalls">
+      <http:operation location="/RecycleCalls" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformations">
+      <http:operation location="/GetCallsInformations" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallsInformationsResult">
+      <http:operation location="/GetCallsInformationsResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToTrialCallFileFromUrl">
+      <http:operation location="/AddToTrialCallFileFromUrl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckTrialImportationUrl">
+      <http:operation location="/CheckTrialImportationUrl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddClientsFromJson">
+      <http:operation location="/AddClientsFromJson" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientFromJson">
+      <http:operation location="/UpdateClientFromJson" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClients">
+      <http:operation location="/DeleteClients" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCalls">
+      <http:operation location="/AddCalls" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCalls">
+      <http:operation location="/DeleteCalls" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacks">
+      <http:operation location="/UpdateCallbacks" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCallbacksForCallFile">
+      <http:operation location="/UpdateCallbacksForCallFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCallsAffectation">
+      <http:operation location="/ChangeCallsAffectation" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteProfiler">
+      <http:operation location="/ExecuteProfiler" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileInfos">
+      <http:operation location="/GetCallFileInfos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFile">
+      <http:operation location="/ApplyDnclToCallFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyDnclToCallFileForIndices">
+      <http:operation location="/ApplyDnclToCallFileForIndices" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListExistingIndices">
+      <http:operation location="/ListExistingIndices" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfo">
+      <http:operation location="/GetDNCLInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDNCLInfoResult">
+      <http:operation location="/GetDNCLInfoResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountBlacklisted">
+      <http:operation location="/CountBlacklisted" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountBlacklistedResult">
+      <http:operation location="/GetCountBlacklistedResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountCallRecords">
+      <http:operation location="/CountCallRecords" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountCallRecordsResult">
+      <http:operation location="/GetCountCallRecordsResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplyDnclResult">
+      <http:operation location="/GetApplyDnclResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetDncl">
+      <http:operation location="/ResetDncl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDnclFromCsv">
+      <http:operation location="/AddToDnclFromCsv" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToDncl">
+      <http:operation location="/AddToDncl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCallFileTZ">
+      <http:operation location="/SetCallFileTZ" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallFileTZ">
+      <http:operation location="/GetCallFileTZ" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ShuffleCallFile">
+      <http:operation location="/ShuffleCallFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTelDisplayColumn">
+      <http:operation location="/UpdateTelDisplayColumn" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CallFileUtilities">
+    <wsdl:port name="CallFileUtilitiesSoap" binding="tns:CallFileUtilitiesSoap">
+      <soap:address location="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CallFileUtilitiesSoap12" binding="tns:CallFileUtilitiesSoap12">
+      <soap12:address location="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CallFileUtilitiesHttpGet" binding="tns:CallFileUtilitiesHttpGet">
+      <http:address location="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CallFileUtilitiesHttpPost" binding="tns:CallFileUtilitiesHttpPost">
+      <http:address location="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

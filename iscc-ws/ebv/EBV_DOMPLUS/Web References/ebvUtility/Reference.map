@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx?disco" filename="CallFileUtilities.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="https://cloud-vcl.vivetic.com/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx?wsdl" filename="CallFileUtilities.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>
