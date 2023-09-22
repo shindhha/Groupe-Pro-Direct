@@ -100,13 +100,13 @@ def sendSmsCommercial(indice):
 def sendCom(salutation, nom, prenom, date_rdv,heure_rdv,tel_prospect,telcom):
     message = "Vous avez un nouveau RDV avec {} {} {} le {} à {} . Joignable au {}".format(salutation, nom, prenom,date_rdv, heure_rdv,tel_prospect)
     pistago ={
-  'action':'send_sms',
-  'auth_email':'dsi.france@groupe-prodirect.com',
-  'auth_password':'**Api@Password',
-  'from':'E.Denis',
-  'to':'+33'+ str(telcom).replace(' ','')[-9:],
-  'text':message
-  }
+      'action':'send_sms',
+      'auth_email':'dsi.france@groupe-prodirect.com',
+      'auth_password':'**Api@Password',
+      'from':'E.Denis',
+      'to':'+33'+ str(telcom).replace(' ','')[-9:],
+      'text':message
+    }
     logging.info(pistago)
     print(pistago)
     responsol_ = requests.get("https://www.manivox.com/api_v2/json_api.php",params=pistago)
